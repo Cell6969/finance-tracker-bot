@@ -1,0 +1,42 @@
+@extends('layouts.app')
+
+@section('title', 'Edit Kategori')
+
+@section('content')
+<div class="max-w-lg mx-auto">
+    <h1 class="text-2xl font-bold text-gray-900 mb-6">Edit Kategori</h1>
+
+    <div class="bg-white rounded-lg shadow p-6">
+        <form method="POST" action="{{ route('categories.update', $category) }}">
+            @csrf
+            @method('PUT')
+            <div class="space-y-4">
+                <div>
+                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nama Kategori</label>
+                    <input type="text" name="name" id="name" value="{{ old('name', $category->name) }}"
+                           class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                           required>
+                    @error('name')<p class="text-red-500 text-sm mt-1">{{ $message }}</p>@enderror
+                </div>
+
+                <div>
+                    <label for="type" class="block text-sm font-medium text-gray-700 mb-1">Tipe Kategori</label>
+                    <select name="type" id="type"
+                            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                            required>
+                        <option value="">-- Pilih Tipe --</option>
+                        <option value="income" {{ old('type', $category->type) === 'income' ? 'selected' : '' }}>Pemasukan (Income)</option>
+                        <option value="expense" {{ old('type', $category->type) === 'expense' ? 'selected' : '' }}>Pengeluaran (Expense)</option>
+                    </select>
+                    @error('type')<p class="text-red-500 text-sm mt-1">{{ $message }}</p>@enderror
+                </div>
+            </div>
+
+            <div class="flex gap-3 mt-6">
+                <a href="{{ route('categories.index') }}" class="flex-1 bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-center hover:bg-gray-300 font-medium">Batal</a>
+                <button type="submit" class="flex-1 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 font-medium">Simpan Perubahan</button>
+            </div>
+        </form>
+    </div>
+</div>
+@endsection
